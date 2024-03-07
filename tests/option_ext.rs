@@ -8,9 +8,8 @@ fn option_trace() {
             e.to_string(),
             String::from(
                 r"Error Trace:
-App Version: 0.4.2
-[tests\option_ext.rs:32] Option was None, expected Some
-[tests\option_ext.rs:28]
+[tests\option_ext.rs:31] Option was None, expected Some
+[tests\option_ext.rs:27]
 [tests\option_ext.rs:5]
 "
             )

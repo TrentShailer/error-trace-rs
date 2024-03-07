@@ -8,10 +8,9 @@ fn context_trace() {
             e.to_string(),
             String::from(
                 r"Error Trace:
-App Version: 0.4.2
-[tests\context.rs:30] Some Error
-[tests\context.rs:30] Test
-[tests\context.rs:26] Some value: 'Test 2'
+[tests\context.rs:29] Some Error
+[tests\context.rs:29] Test
+[tests\context.rs:25] Some value: 'Test 2'
 [tests\context.rs:5]
 "
             )

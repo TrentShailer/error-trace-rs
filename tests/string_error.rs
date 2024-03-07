@@ -8,9 +8,8 @@ fn string_error_trace() {
             e.to_string(),
             String::from(
                 r"Error Trace:
-App Version: 0.4.2
-[tests\string_error.rs:28] Some message
-[tests\string_error.rs:24]
+[tests\string_error.rs:27] Some message
+[tests\string_error.rs:23]
 [tests\string_error.rs:5]
 "
             )
