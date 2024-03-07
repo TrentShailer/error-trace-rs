@@ -1,4 +1,4 @@
-use error_trace::{ErrorTrace, ResultExt, StringError};
+use error_trace::{ErrorTrace, ResultExt};
 
 #[test]
 fn string_error_trace() {
@@ -23,5 +23,5 @@ fn string_err_caller() -> Result<(), ErrorTrace> {
 }
 
 fn string_err() -> Result<(), ErrorTrace> {
-    Err(StringError::new("Some message")).track()
+    Err("Some message").track()
 }

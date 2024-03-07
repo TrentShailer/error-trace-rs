@@ -1,4 +1,4 @@
-use error_trace::{ErrorTrace, ResultExt, StringError};
+use error_trace::{ErrorTrace, ResultExt};
 
 #[test]
 fn context_trace() {
@@ -25,5 +25,5 @@ fn context_caller() -> Result<(), ErrorTrace> {
 }
 
 fn context() -> Result<(), ErrorTrace> {
-    Err(StringError::new("Some Error")).context("Test")
+    Err("Some Error").context("Test")
 }

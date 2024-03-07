@@ -1,4 +1,4 @@
-use crate::{ErrorTrace, StringError};
+use crate::ErrorTrace;
 
 pub trait OptionExt<T>: Sized {
     #[track_caller]
@@ -18,8 +18,7 @@ impl<T> OptionExt<T> for Option<T> {
             Some(v) => Ok(v),
             None => {
                 let caller = std::panic::Location::caller();
-                let e = StringError::new("Option was None, expected Some");
-                let tracked_error = ErrorTrace::new(e, caller);
+                let tracked_error = ErrorTrace::new("Option was None, expected Some", caller);
                 Err(tracked_error)
             }
         }
@@ -31,8 +30,7 @@ impl<T> OptionExt<T> for Option<T> {
             Some(v) => Ok(v),
             None => {
                 let caller = std::panic::Location::caller();
-                let e = StringError::new(context);
-                let tracked_error = ErrorTrace::new(e, caller);
+                let tracked_error = ErrorTrace::new(context, caller);
                 Err(tracked_error)
             }
         }
@@ -45,8 +43,7 @@ impl<T> OptionExt<T> for Option<T> {
             None => {
                 let caller = std::panic::Location::caller();
                 let context = context();
-                let e = StringError::new(&context);
-                let tracked_error = ErrorTrace::new(e, caller);
+                let tracked_error = ErrorTrace::new(context, caller);
                 Err(tracked_error)
             }
         }

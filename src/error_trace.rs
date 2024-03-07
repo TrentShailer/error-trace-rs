@@ -1,10 +1,10 @@
-use std::{error::Error, fmt::Display, panic::Location};
+use std::panic::Location;
 
 use crate::Caller;
 
 #[derive(Debug)]
 pub struct ErrorTrace {
-    pub error: Box<dyn Error>,
+    pub error: String,
     pub location: Caller,
     pub callers: Vec<Caller>,
 }
@@ -12,10 +12,10 @@ pub struct ErrorTrace {
 impl ErrorTrace {
     pub fn new<E>(error: E, caller: &'static Location<'static>) -> Self
     where
-        E: Error + 'static,
+        E: Into<String>,
     {
         Self {
-            error: Box::new(error),
+            error: error.into(),
             location: Caller::new(caller),
             callers: vec![],
         }
@@ -23,11 +23,11 @@ impl ErrorTrace {
 
     pub fn new_with_context<E, S>(error: E, caller: &'static Location<'static>, context: S) -> Self
     where
-        E: Error + 'static,
+        E: Into<String>,
         S: Into<String>,
     {
         Self {
-            error: Box::new(error),
+            error: error.into(),
             location: Caller::new(caller),
             callers: vec![Caller::new_with_context(caller, context)],
         }
@@ -60,35 +60,38 @@ impl ErrorTrace {
 }
 
 #[cfg(not(feature = "color"))]
-impl Display for ErrorTrace {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        writeln!(f, "{}", "Error Trace:")?;
-        writeln!(f, "{} {}", self.location, self.error)?;
+impl ToString for ErrorTrace {
+    fn to_string(&self) -> String {
+        let mut output = String::new();
+
+        output.push_str("Error Trace:\n");
+        output.push_str(&format!("{} {}\n", self.location, self.error));
 
         if !self.callers.is_empty() {
             for caller in self.callers.iter() {
-                writeln!(f, "{}", caller)?;
+                output.push_str(&format!("{}\n", caller));
             }
         }
 
-        Ok(())
+        output
     }
 }
 
 #[cfg(feature = "color")]
-impl Display for ErrorTrace {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+impl ToString for ErrorTrace {
+    fn to_string(&self) -> String {
         use owo_colors::OwoColorize;
+        let mut output = String::new();
 
-        writeln!(f, "{}", "Error Trace:".red().bold())?;
-        writeln!(f, "{} {}", self.location, self.error)?;
+        output.push_str(&"Error Trace:\n".red().bold().to_string());
+        output.push_str(&format!("{} {}\n", self.location, self.error));
 
         if !self.callers.is_empty() {
             for caller in self.callers.iter() {
-                writeln!(f, "{}", caller)?;
+                output.push_str(&format!("{}\n", caller));
             }
         }
 
-        Ok(())
+        output
     }
 }
