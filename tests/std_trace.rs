@@ -7,6 +7,7 @@ fn std_error_trace() {
             e.to_string(),
             String::from(
                 r"Error Trace:
+App Version: 0.4.1
 [tests\std_trace.rs:26] The system cannot find the file specified. (os error 2)
 [tests\std_trace.rs:22]
 [tests\std_trace.rs:5]
