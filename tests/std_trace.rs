@@ -3,13 +3,14 @@ use error_trace::{ErrorTrace, ResultExt};
 #[test]
 fn std_error_trace() {
     if let Err(e) = std_err_caller().track() {
+        println!("{}", e.to_string());
         assert_eq!(
             e.to_string(),
             String::from(
                 r"Error Trace:
-App Version: 0.4.1
-[tests\std_trace.rs:26] The system cannot find the file specified. (os error 2)
-[tests\std_trace.rs:22]
+App Version: 0.4.2
+[tests\std_trace.rs:28] The system cannot find the file specified. (os error 2)
+[tests\std_trace.rs:24]
 [tests\std_trace.rs:5]
 "
             )

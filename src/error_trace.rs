@@ -87,6 +87,7 @@ impl ToString for ErrorTrace {
         let mut output = String::new();
 
         output.push_str(&"Error Trace:\n".red().bold().to_string());
+        output.push_str(&format!("{} {}\n", "App Version".dimmed(), VERSION));
         output.push_str(&format!("{} {}\n", self.location, self.error));
 
         if !self.callers.is_empty() {
