@@ -59,17 +59,6 @@ impl ErrorTrace {
     }
 }
 
-impl<E> From<E> for ErrorTrace
-where
-    E: Error + 'static,
-{
-    #[track_caller]
-    fn from(value: E) -> Self {
-        let caller = std::panic::Location::caller();
-        Self::new(value, caller)
-    }
-}
-
 #[cfg(not(feature = "color"))]
 impl Display for ErrorTrace {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
