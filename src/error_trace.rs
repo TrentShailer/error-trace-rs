@@ -59,15 +59,13 @@ impl ErrorTrace {
     }
 }
 
-const VERSION: &str = env!("CARGO_PKG_VERSION");
-
 #[cfg(not(feature = "color"))]
 impl ToString for ErrorTrace {
     fn to_string(&self) -> String {
         let mut output = String::new();
 
         output.push_str("Error Trace:\n");
-        output.push_str(&format!("App Version: {}\n", VERSION));
+        output.push_str(&format!("App Version: {}\n", env!("CARGO_PKG_VERSION")));
         output.push_str(&format!("{} {}\n", self.location, self.error));
 
         if !self.callers.is_empty() {
@@ -87,7 +85,11 @@ impl ToString for ErrorTrace {
         let mut output = String::new();
 
         output.push_str(&"Error Trace:\n".red().bold().to_string());
-        output.push_str(&format!("{} {}\n", "App Version".dimmed(), VERSION));
+        output.push_str(&format!(
+            "{} {}\n",
+            "App Version".dimmed(),
+            env!("CARGO_PKG_VERSION")
+        ));
         output.push_str(&format!("{} {}\n", self.location, self.error));
 
         if !self.callers.is_empty() {
